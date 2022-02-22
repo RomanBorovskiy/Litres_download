@@ -9,19 +9,19 @@ import time
 from tqdm import tqdm
 
 
-
+#-----------------------------------------------------------
 #urls
 url_books = 'https://www.litres.ru/pages/my_books_fresh/'
 url_login = 'https://www.litres.ru/pages/login/'
 
-
+#-----------------------------------------------------------
 #secrets
 #from secret import login, password
 login = 'your login for litres'
 password = 'your password'
 
 
-
+#-----------------------------------------------------------
 def check_close(driver):
     """
     wait until user closed browser window
@@ -36,7 +36,7 @@ def check_close(driver):
             time.sleep(1)
         except:
             closed = True
-
+#-----------------------------------------------------------
 def create_driver():
     chrome_options = Options()
     chrome_options.add_argument("--disable-extensions")
@@ -44,7 +44,7 @@ def create_driver():
     chrome_service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service = chrome_service, options=chrome_options)
     return driver
-
+#-----------------------------------------------------------
 def login_litres(driver):
     driver.get(url_login)
 
@@ -58,7 +58,7 @@ def login_litres(driver):
     password_in.send_keys(Keys.RETURN)
 
     time.sleep(2)
-
+#-----------------------------------------------------------
 def scroll_down(driver):
     count = 0
     while True:
@@ -81,6 +81,7 @@ def scroll_down(driver):
                 break
 
     print(f'scroll down exit after {count} scrolls')
+#-----------------------------------------------------------
 
 def load_books(driver):
     driver.get(url_books)
@@ -108,6 +109,7 @@ def load_books(driver):
             books.append({"title" : title, "links" : links})
 
     return books
+#-----------------------------------------------------------
 
 def every_downloads_chrome(driver):
     """
@@ -129,12 +131,14 @@ def every_downloads_chrome(driver):
         }
         """)
 
+
 def wait_downloads_complete(driver):
     while True:
         if every_downloads_chrome(driver):
             break
         time.sleep(1)
 
+#-----------------------------------------------------------
 def download_fb2(driver, books):
     print('\nstart downloading books\n')
     time.sleep(1)
@@ -153,7 +157,7 @@ def download_fb2(driver, books):
     bar.set_postfix_str('all complete')
     wait_downloads_complete(driver)
     print('all downloaded')
-
+#-----------------------------------------------------------
 
 
 def litres_loads():
@@ -169,7 +173,7 @@ def litres_loads():
     check_close(driver)
     print('FINISH!')
     #driver.close()
-
+#-----------------------------------------------------------
 
 
 
